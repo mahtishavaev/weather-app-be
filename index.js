@@ -4,7 +4,6 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 
 const app = express();
-const PORT = 5000;
 
 dotenv.config();
 
@@ -17,4 +16,6 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: "Server error" });
 });
 
-app.listen(PORT, () => console.log(`[server]: Server is running at http://localhost:${PORT}`));
+const port = process.env.PORT;
+
+app.listen(port, () => console.log(`[server]: Server is running on port: ${port}`));
