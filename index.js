@@ -2,12 +2,15 @@ const express = require("express");
 const placeRouter = require("./routes/places");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 const app = express();
 
 dotenv.config();
 
 mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopology: true });
+
+app.use(cors());
 
 app.use("/places", placeRouter);
 
