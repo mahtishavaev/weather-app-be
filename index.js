@@ -1,5 +1,6 @@
 const express = require("express");
 const placeRouter = require("./routes/places");
+const weatherRouter = require("./routes/weather");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -13,6 +14,12 @@ mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopo
 app.use(cors());
 
 app.use("/places", placeRouter);
+app.use("/weather", weatherRouter);
+
+app.use((req, res, next) => {
+  // console.log(err);
+  res.status(404).json({ error: "Not found" });
+});
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
