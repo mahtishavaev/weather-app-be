@@ -5,13 +5,13 @@ router.get("/", async (req, res, next) => {
   if (!req.query.name) {
     return res.status(400).json({ error: "Name is required" });
   }
-
+  const name = req.query.name.trim();
   try {
     const place = await Place.find(
       {
         $or: [
-          { name: { $regex: req.query.name, $options: "i" } },
-          { names: { $regex: req.query.name, $options: "i" } },
+          { name: { $regex: name, $options: "i" } },
+          { names: { $regex: name, $options: "i" } },
         ],
       },
       null,
