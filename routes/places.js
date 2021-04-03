@@ -7,25 +7,29 @@ router.get("/", async (req, res, next) => {
   }
 
   try {
-    const place = await Place.find({
-      $or: [
-        { name: { $regex: req.query.name, $options: "i" } },
-        { names: { $regex: req.query.name, $options: "i" } },
-      ],
-    });
-
-    const response = place
-      .sort((a, b) => b.population - a.population)
-      .slice(0, 10)
-      .map(({ name, country, geoname_id, longitude, latitude, population }) => ({
-        name,
-        country,
-        geoname_id,
-        longitude,
-        latitude,
-        population,
-      }));
-
+    const place = await Place.find(
+      {
+        $or: [
+          { name: { $regex: req.query.name, $options: "i" } },
+          { names: { $regex: req.query.name, $options: "i" } },
+        ],
+      },
+      null,
+      {
+        skip: 0,
+        limit: 5,
+        sort: {
+          population: -1,
+        },
+      }
+    );
+    const response = place.map(({ name, country, geoname_id, longitude, latitude }) => ({
+      name,
+      country,
+      geoname_id,
+      longitude,
+      latitude,
+    }));
     res.json(response);
   } catch (err) {
     next(err);
