@@ -9,7 +9,7 @@ router.get("/", async (req, res, next) => {
   let lat, lon, locationName;
 
   if (!locationId) {
-    return res.status(400).json({ error: "City id is required" });
+    return res.status(400).json({ message: "City id is required" });
   }
 
   try {
@@ -18,7 +18,7 @@ router.get("/", async (req, res, next) => {
     lon = location.longitude;
     locationName = location.name;
   } catch (error) {
-    return res.status(404).json({ error: "Location not found" });
+    return res.status(404).json({ message: "Location not found" });
   }
 
   try {

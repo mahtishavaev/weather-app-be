@@ -17,13 +17,12 @@ app.use("/places", placeRouter);
 app.use("/weather", weatherRouter);
 
 app.use((req, res, next) => {
-  // console.log(err);
-  res.status(404).json({ error: "Not found" });
+  res.status(404).json({ message: "Not found" });
 });
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ error: "Server error" });
+  res.status(500).json({ message: "Server error" });
 });
 
 const port = process.env.PORT;
